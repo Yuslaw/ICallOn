@@ -4,6 +4,6 @@ namespace api.Entities
     {
         public int Id {get; set;}
         public string Alphabets {get; set;}
-
+        public List<GameInitial> GameInitial {get; set;} = new GameInitial();
     }
 }
