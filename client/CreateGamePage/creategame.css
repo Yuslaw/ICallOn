@@ -1,0 +1,76 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.landing{
+
+    height: 100vh;
+    display: flex;
+    background-image: url(/ICallOn//client/CreateGamePage/image33.jpg);
+    background-size:100%;
+    background-blend-mode:darken;
+    width: 100%;
+    
+}
+.top{
+   float: left;
+   width: 90%;
+}
+.display-top{
+    background-color: whitesmoke;
+    margin: 10% 15%;
+    width: 60%;
+    padding-bottom: 8%;
+    border-radius: 15px;
+}
+
+.display-up{
+    display: flex;
+padding-left: 15px;
+}
+.display-down{
+    
+    display: flex;
+    /* justify-content: center; */
+    margin: 20% 10%; 
+    /* padding: 50px; */
+}
+.form{
+   
+    margin: 8%;
+}
+.game-title{
+  
+    margin-bottom: 5%;
+  
+}
+.game-title input{
+    border-radius: 5px;
+    width: 80%;
+    height: 30px;    
+}
+.no-of-team{
+   
+    margin-bottom: 5%;
+   
+}
+.no-of-team input{
+    border-radius: 5px;
+    width: 80%;
+    height: 30px;
+}
+.submit{
+   
+    
+    display: flex;
+    
+    height: 70px;
+    padding-top: 10%;
+}
+button{
+    width: 80%;
+    background-color: rgb(83, 125, 239);
+    border-radius: 15px;
+    
+}
