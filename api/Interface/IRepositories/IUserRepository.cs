@@ -1,7 +1,9 @@
+using api.Entities;
+
 namespace api.Interface.IRepositories
 {
-    public class IUserRepository
+    public interface IUserRepository
     {
-        
+
     }
 }
