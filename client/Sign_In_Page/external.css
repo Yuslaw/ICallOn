@@ -1,0 +1,105 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+.container{
+    width : 100vw;
+    height: 100vh;
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container{
+    display: flex;
+    width: 150rem;
+    height: 70rem;
+    background-color: white;
+    border-radius: 2rem;
+}
+#picture-container{
+    display: flex;
+    flex-direction: row;
+    border: 2px solid red;
+    width: 40vw;
+    height: 77vh;
+    left: 5rem;
+    top: 4rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    border-radius: 4rem;
+    background-image: url('/Images/btr.jpg');
+}
+#text{
+    top: 5rem;
+    left: 9rem;
+    position: relative;
+    width: 42vw;
+    height: 75vh;
+    font-size: 39px;
+    font-family:cursive;
+    gap: 2rem;
+    display: flex;
+    align-self: start;
+    flex-direction: column;
+}
+#submit{
+    background-color: blue;
+    border-radius: 1rem;
+    color: white;
+    font-size: 2rem;
+    width: 72rem;
+    height: 4rem;
+    margin-top: 4rem;
+    align-items: center;
+}
+input{
+    margin-top: 1.5rem;
+    font-size: 2rem;
+    width: 70rem;
+    height: 4rem;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+#check{
+    width: 4rem;
+    height: 2rem;
+    margin-top: 2rem;
+}
+label{
+    margin-top: 20rem;
+}
+#form{
+    margin-top: 2rem;
+}
+#big{
+    margin-top: 6rem;
+}
+#small{
+    margin-bottom: 2rem;
+}
+#top{
+    margin-top: 0px;
+}
+#inner{
+    bottom: 2rem;
+    width: 37rem;
+    padding: 7rem;
+    height: 10rem;
+    margin-top: 4rem;
+    font-size: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: antiquewhite;
+}
+#blur{
+    z-index: 2;
+    filter: blur(52px);
+    overflow: hidden;
+    box-shadow: 0 0 .5rem 0 red;
+    opacity: 2px;
+}
