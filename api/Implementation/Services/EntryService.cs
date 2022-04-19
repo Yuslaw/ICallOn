@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using api.Dtos;
@@ -58,19 +59,31 @@ namespace api.Implementation.Services
 
         }
 
-        public Task<IList<EntriesResponseModel>> GetEntriesByExpression(Expression<Func<Entry, bool>> expression)
-        {
-            throw new NotImplementedException();
-        }
+        
 
-        public Task<IList<EntriesResponseModel>> GetEntries()
-        {
-            throw new NotImplementedException();
-        }
+       public  async Task<EntriesResponseModel> GetEntries()
+       {
+           var entries = await _entryRepository.GetEntries();
+           return new EntriesResponseModel
+           {
+               Data = entries.Select(v=>new EntryDto
+               {
+                   Alphabet = v.Initial.Alphabets,
+                   Score = v.Score,
+                   GameId = v.GameId,
+                   GameTitle = v.Game.Title,
+                   PlayerId = v.PlayerId,
+                   Value = v.Value,
+                   InitialId = v.InitialId,
+                   UserName = v.Player.Username,
+                   Id = v.Id
+                   
+               }).ToList(),
+                 Message="Successful",
+                 Status = true
 
-        public Task<EntryResponseModel> GetEntry(Expression<Func<Entry, bool>> expression)
-        {
-            throw new NotImplementedException();
-        }
+           };
+       }
+        
     }
 }
