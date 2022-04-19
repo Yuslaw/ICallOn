@@ -1,7 +1,11 @@
+using api.Entities;
+
 namespace api.Interface.IRepositories
 {
-    public class IUserRepository
+    public interface IUserRepository
     {
+        User ResgisterUser(User user);
+        bool CheckUserName(string username);
         
     }
 }

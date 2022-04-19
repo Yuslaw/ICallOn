@@ -1,6 +1,6 @@
 namespace api.Interface.IServices
 {
-    public class IUserServices
+    public interface IUserServices
     {
         
     }
