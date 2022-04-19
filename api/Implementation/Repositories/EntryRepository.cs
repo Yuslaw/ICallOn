@@ -1,37 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Api.Application;
 using api.Entities;
 using api.Interface.IRepositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Implementation.Repositories
 {
     public class EntryRepository:IEntryRepository
     {
-        public Task<Entry> CreateEntry(Entry entry)
+        private readonly ApplicationContext _context;
+
+        public EntryRepository(ApplicationContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<Entry> UpdateEntry(Entry entry)
+        public async Task<Entry> CreateEntry(Entry entry)
         {
-            throw new NotImplementedException();
+            await _context.Entries.AddAsync(entry);
+            await _context.SaveChangesAsync();
+            return entry;
         }
 
-        public Task<IList<Entry>> GetEntriesByExpression(Expression<Func<Entry, bool>> expression)
+        public void SaveChanges()
         {
-            throw new NotImplementedException();
+             _context.SaveChanges();
         }
 
-        public Task<IList<Entry>> GetEntries()
+        public async Task<Entry> UpdateEntry(Entry entry)
         {
-            throw new NotImplementedException();
+            _context.Entries.Update(entry);
+            await _context.SaveChangesAsync();
+            return entry;
         }
 
-        public Task<Entry> GetEntry(Expression<Func<Entry, bool>> expression)
+        public async Task<IList<Entry>> GetEntriesByExpression(Expression<Func<Entry, bool>> expression)
         {
-            throw new NotImplementedException();
+            return await _context.Entries.Where(expression).Include(E => E.Game)
+                .Include(E => E.Initial)
+                .Include(E => E.Player).ToListAsync();
+        }
+
+        public async Task<IList<Entry>> GetEntries()
+        {
+            return await _context.Entries.
+                Include(E => E.Game)
+                .Include(E => E.Initial)
+                .Include(E => E.Player).ToListAsync();
+        }
+
+        public async Task<Entry> GetEntry(Expression<Func<Entry, bool>> expression)
+        {
+            return await _context.Entries.Include(E => E.Game)
+                .Include(E => E.Initial)
+                .Include(E => E.Player)
+                .Where(expression).SingleOrDefaultAsync();
         }
     }
 }
