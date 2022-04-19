@@ -10,5 +10,6 @@ namespace api.Entities
         public int InitialId { get; set; }
         public Initial Initial { get; set; }
         public string Value { get; set; }
+        public double Score { get; set; }
     }
 }

@@ -10,8 +10,11 @@ namespace api.Interface.IRepositories
         public bool DeleteGame(int id);
         public Game GetGame(int id);
         public IList<Game> GetAll();
+        /*public IList<PlayerDto> GetPlayersByGame(int id);*/
         
         
+
+
 
 
     }
