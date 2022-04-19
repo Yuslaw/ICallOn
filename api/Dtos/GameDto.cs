@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace api.Entities
+namespace api.Dtos
 {
-    public class Game
+    public class GameDto
     {
         public int Id{get; set;}
         public string GameCode { get; set; }
@@ -12,8 +12,22 @@ namespace api.Entities
         public  bool IsPlayed { get; set; }
         public DateTime CreatedTime { get; set; }
         public  bool IsStarted { get; set; }
-        public IList<Player> Players { get; set; } = new List<Player>();
-        public IList<Entry> Entries { get; set; } = new List<Entry>();
-        public ICollection<GameInitial> GameInitials { get; set; } = new HashSet<GameInitial>();
     }
+
+    public class GameRequestModel
+    {
+         public string Title { get; set; }
+    }
+
+    public class GameResponseModel:BaseResponse
+    {
+       public GameDto Data { get; set; } 
+    }
+
+    public class GamesResponseModel: BaseResponse
+    {
+        private IList<GameDto> Data { get; set; }
+    }
+    
+    
 }
