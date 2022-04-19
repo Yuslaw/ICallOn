@@ -1,0 +1,116 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing:  border-box;
+}
+:root {
+    --buttoncolour: rgb(118, 112, 177);
+    --darkbutton: rgb(51, 51, 99);
+    --textcolor : white;
+    --blendcolor: rgb(232, 242, 247);
+
+  }
+.body{
+    height: 100%
+}
+.container1{
+border: 20px solid var(--blendcolor);
+margin : 20px 30px;
+margin-top: 70px;
+margin-left: 25%;
+width: 55pc;
+border-radius: 29px;
+
+}
+.container2{
+    display: flex;
+    flex-direction: column;
+    height: 155vh;
+    background-color: var(--buttoncolour);
+    border-radius: 9px;
+    justify-content: space-between;
+    gap: 100px;
+    
+}
+.exit{
+    display: flex;
+    flex-direction: row-reverse;
+    
+
+}
+.exit button{
+    border: 2px solid cornsilk;
+    margin-right: 20px;
+    margin-top: 10px;
+    background-color: var(--buttoncolour);
+    color: cornsilk;
+    width: 20px ;
+    border-radius: 15px;
+    
+}
+.exit button:hover{
+    background-color: var(--darkbutton);
+}
+.message{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    color: var(--textcolor);
+    font-size: 35px;
+    margin-top: 30px;
+}
+.start {
+
+    border: 5px dashed white ;
+    border-radius: 100px;
+    background-color:var(--buttoncolour);
+    margin: auto;
+    height: 200px;
+    width: 200px;
+    
+}
+
+.start:hover{
+background-color: var(--darkbutton);
+}
+.start h3{
+    color: var(--textcolor);
+    font-size: 55px;
+    padding: 20px;
+}
+.players{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 56px;
+}
+.players h6{
+    font-size: 23px;
+    color: var(--textcolor);
+}
+.avaters ul{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    justify-content: space-between;
+    gap: 15px;
+    color: var(--textcolor);
+    font-size: 2pc;
+    
+}
+.avaters li{
+    border: 2px solid inherit;
+    height: 52px;
+    width: 52px;
+    border-radius: 39px;
+}
+li .images{
+    height: inherit;
+    width: inherit;
+    border-radius :35px; 
+
+}
