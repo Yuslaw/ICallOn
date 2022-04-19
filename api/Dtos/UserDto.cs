@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-﻿namespace api.Dtos
-{
-    public class UserDto
-    {
-=======
+
 using System.Collections.Generic;
 
 namespace api.Dtos
@@ -35,7 +30,6 @@ namespace api.Dtos
     {
         public string UserName{get; set;}
         public string Password{get; set;}
->>>>>>> 30e37ed86e99accec6f38cae75de8206f581fb28
     }
 }
  
