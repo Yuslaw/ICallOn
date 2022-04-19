@@ -2,34 +2,48 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using api.Entities;
 using api.Interface.IRepositories;
+using Api.Application;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Implementation.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public Task<bool> CheckUserName(string username)
+        private ApplicationContext _Context;
+        public UserRepository(ApplicationContext Context)
         {
-            throw new System.NotImplementedException();
+            _Context = Context;
+        }
+        public async Task<bool> CheckUserName(string username)
+        {
+            var checkUserName = await _Context.Users.FindAsync(username);
+            return true;
         }
 
-        public Task<IList<User>> GetAllUsers()
+        public async Task<IList<User>> GetAllUsers()
         {
-            throw new System.NotImplementedException();
+            var getAll = await _Context.Users.ToListAsync();
+            return getAll;
         }
 
-        public Task<User> GetUser(string username)
+        public async Task<User> GetUser(string username)
         {
-            throw new System.NotImplementedException();
+            var checkUserName = await _Context.Users.FindAsync(username);
+            return checkUserName;
         }
 
-        public Task<User> ResgisterUser(User user)
+        public async Task<User> ResgisterUser(User user)
         {
-            throw new System.NotImplementedException();
+           var create = await _Context.AddAsync(user);
+           await _Context.SaveChangesAsync();
+           return user;
         }
 
-        public Task<User> Update(User user)
+        public User Update(User user)
         {
-            throw new System.NotImplementedException();
+           var update = _Context.Update(user);
+           _Context.SaveChanges();
+           return user;
         }
     }
 }

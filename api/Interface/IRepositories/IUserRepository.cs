@@ -10,6 +10,6 @@ namespace api.Interface.IRepositories
         Task<bool> CheckUserName(string username);
         Task<User> GetUser(string username);
         Task<IList<User>> GetAllUsers();
-        Task<User> Update(User user);
+        User Update(User user);
     }
 }
