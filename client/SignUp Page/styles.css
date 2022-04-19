@@ -1,0 +1,143 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+    
+}
+
+.container{
+    width: 100vw;
+    height: 100%;
+    background: white;
+    display: flex;
+    
+}
+
+.input{
+    margin-right: 60px;
+    margin-left: 60px;
+    margin-top: 40px;
+    margin-bottom: 150px;
+    height: 80%;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content:baseline;
+    align-items:baseline;
+    background: #ffffff;
+    flex-grow: 1;
+    border-radius: 10px;
+}
+
+#write{
+    height:200%;
+    width: 120%;
+    
+    
+}
+
+
+.tree{
+    margin-left: 50px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    background-image: url('/Ocean/btr.jpg');
+    flex-grow: 1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+    width: 35%;
+}
+.blu{
+    width: 43%;
+    height: 43%;
+    position: absolute;
+    box-shadow: 0 0 .5rem 0 rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    z-index: 1;
+    background: inherit;
+    overflow: hidden;
+    filter: blur(10px);
+    margin-left: 1%;
+    margin-top: 3%;
+}
+
+.ico{
+    margin-bottom: 5%;
+}
+
+
+.pp{
+    padding: 90px;
+    z-index: 2;
+    position: relative;
+   
+
+}
+.bottom-text{
+    padding-top: 100px;
+    margin-top: 40px;
+
+}
+
+a{
+    text-decoration: none;
+    padding: 1px;
+    background-color: #ffffff;
+    color: ash;
+}
+
+.button {
+    margin-top: .2rem;
+    padding: .5rem;
+    color: white;
+    background-color: blue;
+    height: 2rem;
+    width: 10rem;
+    padding: .5rem;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.input-field{
+    outline: black;
+    border: 1px solid black;
+    height: 1rem;
+    width: 20rem;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.input-field::placeholder {
+    text-align: center;
+    font-weight: bold;
+
+}
+
+.input-field:hover {
+    transition: .3s;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+#error-message {
+    color: red;
+   
+}
+.hidden{
+    display: none;
+}
+.the{
+    
+    margin-bottom: 20px;
+}
+
+
