@@ -7,8 +7,8 @@ namespace api.Dtos
     {
         public int Id { get; set; }
         public string  UserName { get; set; }
-        public string  Score { get; set; }
-        public string  GameName { get; set; }
+        public int  Score { get; set; }
+        public int  GameId { get; set; }
         
         
     }
