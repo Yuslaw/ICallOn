@@ -16,8 +16,8 @@ namespace api.Implementation.Repositories
         }
         public async Task<bool> CheckUserName(string username)
         {
-            var checkUserName = await _Context.Users.FindAsync(username);
-            return true;
+            var checkUserName = await _Context.Users.AnyAsync(x => x.UserName.ToLower() == username.ToLower());
+            return checkUserName;
         }
 
         public async Task<IList<User>> GetAllUsers()
@@ -28,7 +28,7 @@ namespace api.Implementation.Repositories
 
         public async Task<User> GetUser(string username)
         {
-            var checkUserName = await _Context.Users.FindAsync(username);
+            var checkUserName = await _Context.Users.FirstOrDefaultAsync(x => x.UserName.ToLower() == username.ToLower());
             return checkUserName;
         }
 
