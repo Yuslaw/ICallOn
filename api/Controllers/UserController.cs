@@ -45,9 +45,9 @@ namespace api.Controllers
         }
 
         [HttpGet("GetUser")]
-        public async Task<IActionResult> GetUser(string getu)
+        public async Task<IActionResult> GetUser()
         {
-            getu = User.FindFirstValue(ClaimTypes.Name);
+            var getu = User.FindFirstValue(ClaimTypes.Name);
             var getUser = await _userService.GetUser(getu);
             if (getUser!=null)
             {
@@ -57,7 +57,7 @@ namespace api.Controllers
             return BadRequest();
         }
 
-        [HttpPut("UpdateStaff")]
+        [HttpPut("UpdateUser")]
         public async Task<IActionResult> UpdateUser(UserRequestModel user)
         {
             var update = await _userService.Update(user);
