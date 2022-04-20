@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 
 namespace api.Dtos
@@ -5,6 +6,8 @@ namespace api.Dtos
     public class UserDto
     {
         public int Id{get;set;}
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string UserName{get;set;}
         public string Password{get;set;}
         public string Gender{get;set;}
@@ -13,6 +16,8 @@ namespace api.Dtos
     public class UserRequestModel
     {
         public string UserName{get;set;}
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Password{get;set;}
         public string Gender{get;set;}
         public string Avatar{get;set;}
@@ -30,4 +35,11 @@ namespace api.Dtos
         public string UserName{get; set;}
         public string Password{get; set;}
     }
+    public class UserLoginResponse
+    {
+        public string UserName{get; set;}
+        public string Token{get; set;}
+        public UserDto Data{get;set;}
+    }
 }
+

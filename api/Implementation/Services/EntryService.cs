@@ -22,7 +22,7 @@ namespace api.Implementation.Services
         }
         public async Task<BaseResponse> CreateEntry(CreateEntryRequestModel model)
         {
-            var game = _gameRepository.GetGame(model.GameId);
+            var game = await _gameRepository.GetGame(model.GameId);
             var entrys = new Entry
             {
                 Game = game,
@@ -84,6 +84,75 @@ namespace api.Implementation.Services
 
            };
        }
-        
+
+        public async Task<EntryResponseModel> GetEntry(int id)
+        {
+            var entry = await _entryRepository.GetEntry(E => E.Id == id);
+            var entryDto = new EntryDto
+            {
+                Id = id,
+                Alphabet = entry.Initial.Alphabets,
+                GameId = entry.GameId,
+                GameTitle = entry.Game.Title,
+                InitialId = entry.InitialId,
+                PlayerId = entry.PlayerId,
+                Score = entry.Score,
+                UserName = entry.Player.Username,
+                Value = entry.Value,
+            };
+            return new EntryResponseModel
+            {
+                Data = entryDto,
+                Message = "Successful Entry Retrieval",
+                Status= true,
+            };
+        }
+
+        public async Task<EntriesResponseModel> GetEntriesByGameCode(string GameCode)
+        {
+            var entries = await _entryRepository.GetEntriesByExpression(E => E.Game.GameCode == GameCode);
+            return new EntriesResponseModel
+            {
+                Data = entries.Select(e => new EntryDto
+                {
+                    Alphabet = e.Initial.Alphabets,
+                    GameId = e.Game.Id,
+                    GameTitle = e.Game.Title,
+                    Id = e.Id,
+                    InitialId = e.InitialId,
+                    PlayerId = e.PlayerId,
+                    Score = e.Score,
+                    UserName = e.Player.Username,
+                    Value = e.Value,
+
+                }).ToList(),
+                Message = "Retrieval Successfull",
+                Status = true,
+            };
+        }
+
+        public async Task<EntriesResponseModel> GetEntriesByInitialAlphabetAsync(string Alphabet)
+
+        {
+            var entries = await _entryRepository.GetEntriesByExpression(E => E.Initial.Alphabets == Alphabet);
+            return new EntriesResponseModel
+            {
+                Data = entries.Select(e => new EntryDto
+                {
+                    Alphabet = e.Initial.Alphabets,
+                    GameId = e.Game.Id,
+                    GameTitle = e.Game.Title,
+                    Id = e.Id,
+                    InitialId = e.InitialId,
+                    PlayerId = e.PlayerId,
+                    Score = e.Score,
+                    UserName = e.Player.Username,
+                    Value = e.Value,
+
+                }).ToList(),
+                Message = "Retrieval Successfull",
+                Status = true,
+            };
+        }
     }
 }

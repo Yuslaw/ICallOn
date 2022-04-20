@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using api.Entities;
 
 namespace api.Dtos
 {
@@ -26,7 +27,8 @@ namespace api.Dtos
 
     public class GamesResponseModel: BaseResponse
     {
-        private IList<GameDto> Data { get; set; }
+        public IList<GameDto> Data { get; set; }
+        
     }
     
     
