@@ -36,7 +36,7 @@ namespace api.Controllers
 
 
 
-        [HttpPost("UpdateEntry")]
+        [HttpPut("UpdateEntry")]
         public async Task<IActionResult> UpdateEntry(UpdateEntryRequestModel model)
         {
             var entry = await _entryService.UpdateEntry(model);
