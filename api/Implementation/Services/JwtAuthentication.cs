@@ -29,7 +29,8 @@ namespace api.Implementation.Services
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.Name, user.UserName.ToString()),
                 }),
-                IssuedAt = DateTime.Now,
+                NotBefore = DateTime.Now,
+                IssuedAt = DateTime.Now.AddMinutes(1),
                 Expires = DateTime.Now.AddHours(1),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(tokenKey), 
