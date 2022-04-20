@@ -30,7 +30,7 @@
     background-size: cover;
     position: relative;
     border-radius: 4rem;
-    background-image: url('/Images/btr.jpg');
+    background-image: url('./Images/btr.jpg');
 }
 #text{
     top: 5rem;
