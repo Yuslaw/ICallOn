@@ -137,9 +137,9 @@ namespace api.Implementation.Services
             };
         }
 
-        public async Task<GameResponseModel>  GetGameByTitle(GameRequestModel request)
+        public async Task<GameResponseModel>  GetGameByTitle(string title)
         {
-            var getGame = await _gameRepository.GetGameByTitle(request.Title);
+            var getGame = await _gameRepository.GetGameByTitle(title);
             if (getGame != null)
             {
                 return new GameResponseModel
@@ -165,22 +165,21 @@ namespace api.Implementation.Services
             };
         }
 
-        /*public async Task<PlayersResponseModel> GetPlayersByGame(int id)
+        public async Task<PlayersResponseModel> GetPlayersByGame(int id)
         {
             var players = (await _gameRepository.GetPlayersByGame(id)).Select(s=> new PlayerDto()
             {
                 Id = s.Id,
                 GameName = s.Game.Title,
                 UserName = s.Username,
-                
-            });
-            if (players != null)
+                GameCode = s.Game.GameCode,
+                Score = s.Score,
+            }).ToList();
+            return new PlayersResponseModel()
             {
-                return new PlayersResponseModel
-                {
-                    Data = new L
-                }
-            }
-        }*/
+                Data = players,
+                Status = true,
+            };
+        }
     }
 }

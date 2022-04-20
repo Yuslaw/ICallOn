@@ -54,7 +54,7 @@ namespace api.Implementation.Repositories
 
         public async Task<Game> GetGameByTitle(string title)
         {
-            var game = await _context.Games.FirstOrDefaultAsync(x=>x.Title==title);
+            var game = await _context.Games.SingleOrDefaultAsync(x=>x.Title==title);
             return game;
         }
 
