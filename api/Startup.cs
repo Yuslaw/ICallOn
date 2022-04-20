@@ -36,7 +36,11 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddScoped<IEntryRepository, EntryRepository>();
+            services.AddScoped<IEntryService, EntryService>();
+
             const string key = "ifhiewi949433849jfdjoi0oel03-039--";
+
 
             services.AddControllers();
 
