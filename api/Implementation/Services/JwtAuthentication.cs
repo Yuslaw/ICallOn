@@ -26,7 +26,8 @@ namespace api.Implementation.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, user.UserName.ToString()),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.UserName.ToString()),
                 }),
                 IssuedAt = DateTime.Now,
                 Expires = DateTime.Now.AddHours(1),

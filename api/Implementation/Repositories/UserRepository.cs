@@ -45,5 +45,12 @@ namespace api.Implementation.Repositories
            _Context.SaveChanges();
            return user;
         }
+
+        public bool Delete(User user)
+        {
+            _Context.Remove(user);
+            _Context.SaveChanges();
+            return true;
+        }
     }
 }

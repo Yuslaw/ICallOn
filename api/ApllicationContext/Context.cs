@@ -13,7 +13,7 @@ namespace Api.Application
         }
 
 
-          public DbSet<Entry> Entries {get; set;}
+        public DbSet<Entry> Entries {get; set;}
         public DbSet<Game> Games {get; set;}
         public DbSet<GameInitial> GameInitials {get; set;}
         public DbSet<Initial> Initials {get; set;}
