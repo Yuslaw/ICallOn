@@ -11,5 +11,6 @@ namespace api.Interface.IServices
         Task<GamesResponseModel> GetAllGames();
         Task<GameResponseModel> GetGame(int id);
         Task<GameResponseModel> GetGameByTitle(GameRequestModel request);
+        /*Task<PlayersResponseModel> GetPlayersByGame(int id);*/
     }
 }

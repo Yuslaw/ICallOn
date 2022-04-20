@@ -164,6 +164,23 @@ namespace api.Implementation.Services
                 Message = "Failed"
             };
         }
-        
+
+        /*public async Task<PlayersResponseModel> GetPlayersByGame(int id)
+        {
+            var players = (await _gameRepository.GetPlayersByGame(id)).Select(s=> new PlayerDto()
+            {
+                Id = s.Id,
+                GameName = s.Game.Title,
+                UserName = s.Username,
+                
+            });
+            if (players != null)
+            {
+                return new PlayersResponseModel
+                {
+                    Data = new L
+                }
+            }
+        }*/
     }
 }

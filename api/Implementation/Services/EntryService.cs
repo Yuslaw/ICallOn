@@ -22,7 +22,7 @@ namespace api.Implementation.Services
         }
         public async Task<BaseResponse> CreateEntry(CreateEntryRequestModel model)
         {
-            var game = _gameRepository.GetGame(model.GameId);
+            var game = await _gameRepository.GetGame(model.GameId);
             var entrys = new Entry
             {
                 Game = game,
