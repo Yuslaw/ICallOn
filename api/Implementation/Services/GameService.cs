@@ -14,9 +14,11 @@ namespace api.Implementation.Services
     {
         private readonly IGameRepository _gameRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IGameInitialRepository _gameInitialRepository;
 
-        public GameService(IGameRepository gameRepository, IUserRepository userRepository)
+        public GameService(IGameRepository gameRepository, IUserRepository userRepository, IGameInitialRepository gameInitialRepository)
         {
+            _gameInitialRepository = gameInitialRepository;
             _userRepository = userRepository;
             _gameRepository = gameRepository;
         }
@@ -41,6 +43,7 @@ namespace api.Implementation.Services
                 IsStarted = false
             };
 
+
             game.Players.Add(new Player
             {
                 Username = creator.UserName,
@@ -48,7 +51,18 @@ namespace api.Implementation.Services
                 IsActive = true,
                 GameId = game.Id,
             });
+
             var add = await _gameRepository.AddGame(game);
+
+            var gameInitals = request.Alphabets.Select(c => new GameInitial
+            {
+                Alphabet = c.ToString(),
+                GameId = game.Id
+            }).ToList();
+
+            await _gameInitialRepository.AddInitials(gameInitals);
+
+
             if (add != null)
             {
                 return new GameResponseModel()

@@ -103,7 +103,7 @@ namespace api.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     GameId = table.Column<int>(type: "int", nullable: false),
-                    Alphabet = table.Column<int>(type: "int", nullable: false),
+                    Alphabet = table.Column<string>(type: "text", nullable: true),
                     IsIPlayed = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     PlayerId = table.Column<int>(type: "int", nullable: true)
                 },

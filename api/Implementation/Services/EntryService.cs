@@ -28,7 +28,8 @@ namespace api.Implementation.Services
                 Game = game,
                 PlayerId = model.PlayerId,
                 Value = model.Value,
-                
+                Alphabet = model.Alphabet.ToString(),
+                Category = model.Category
             };
             var entris =  await _entryRepository.CreateEntry(entrys);
             return new BaseResponse()
@@ -68,7 +69,7 @@ namespace api.Implementation.Services
            {
                Data = entries.Select(v=>new EntryDto
                {
-                   Alphabet = v.Alphabet,
+                   Alphabet = Convert.ToChar(v.Alphabet),
                    Score = v.Score,
                    GameId = v.GameId,
                    GameTitle = v.Game.Title,
@@ -90,7 +91,7 @@ namespace api.Implementation.Services
             var entryDto = new EntryDto
             {
                 Id = id,
-                Alphabet = entry.Alphabet,
+                Alphabet = Convert.ToChar(entry.Alphabet),
                 GameId = entry.GameId,
                 GameTitle = entry.Game.Title,
                 PlayerId = entry.PlayerId,
@@ -113,7 +114,7 @@ namespace api.Implementation.Services
             {
                 Data = entries.Select(e => new EntryDto
                 {
-                    Alphabet = e.Alphabet,
+                    Alphabet = Convert.ToChar(e.Alphabet),
                     GameId = e.Game.Id,
                     GameTitle = e.Game.Title,
                     Id = e.Id,
@@ -131,12 +132,12 @@ namespace api.Implementation.Services
         public async Task<EntriesResponseModel> GetEntriesByInitialAlphabetAsync(char Alphabet)
 
         {
-            var entries = await _entryRepository.GetEntriesByExpression(E => E.Alphabet == Alphabet);
+            var entries = await _entryRepository.GetEntriesByExpression(E => E.Alphabet == Alphabet.ToString());
             return new EntriesResponseModel
             {
                 Data = entries.Select(e => new EntryDto
                 {
-                    Alphabet = e.Alphabet,
+                    Alphabet = Convert.ToChar(e.Alphabet),
                     GameId = e.Game.Id,
                     GameTitle = e.Game.Title,
                     Id = e.Id,

@@ -1,8 +1,10 @@
 ﻿using api.Dtos;
+using api.Entities.Enums;
 using api.Interface.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace api.Controllers
@@ -32,6 +34,20 @@ namespace api.Controllers
             }
 
             return BadRequest();
+        }
+
+        [HttpGet("GetCategories")]
+        public IActionResult GetCategories()
+        {
+              var categories = Enum.GetValues(typeof(Category)).Cast<Category>();
+
+            var categoriesDto = categories.Select(s => new CategoriesDto
+            {
+                Id = (int) s,
+                Name = s.ToString()
+            }).ToList();
+
+            return Ok(categoriesDto);
         }
 
 

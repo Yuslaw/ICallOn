@@ -69,6 +69,8 @@ namespace api
             services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<IPlayerService, PlayerService>();
+
+            services.AddScoped<IGameInitialRepository, GameInitialRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });

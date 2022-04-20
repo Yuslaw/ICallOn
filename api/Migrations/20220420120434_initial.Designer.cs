@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220420112818_initial")]
+    [Migration("20220420120434_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,8 +84,8 @@ namespace api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<char>("Alphabet")
-                        .HasColumnType("int");
+                    b.Property<string>("Alphabet")
+                        .HasColumnType("text");
 
                     b.Property<int>("GameId")
                         .HasColumnType("int");
