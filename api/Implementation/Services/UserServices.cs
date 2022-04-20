@@ -81,7 +81,7 @@ namespace api.Implementation.Services
         {
             var getUser = await _userRepository.GetUser(loginRequest.UserName);
             
-            if (getUser!=null && loginRequest.Password != null)
+            if (getUser!=null && getUser.Password == loginRequest.Password)
             {
                 return new UserResponseModel()
                 {
