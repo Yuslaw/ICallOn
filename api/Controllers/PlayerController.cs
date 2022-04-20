@@ -18,7 +18,8 @@ namespace api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPlayer(CreatePlayerRequest playerRequest)
         {
-            var player = await _playerService.AddPlayer(playerRequest);
+            
+            var player = await _playerService.AddPlayer(playerRequest, User.Identity.IsAuthenticated);
             if (player.Status == true)
             {
                 return Ok(player);

@@ -10,26 +10,59 @@ using System.Linq;
 
 namespace api.Implementation.Services
 {
-    public class GameService:IGameService
+    public class GameService : IGameService
     {
         private readonly IGameRepository _gameRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IGameInitialRepository _gameInitialRepository;
 
-        public GameService(IGameRepository gameRepository)
+        public GameService(IGameRepository gameRepository, IUserRepository userRepository, IGameInitialRepository gameInitialRepository)
         {
+            _gameInitialRepository = gameInitialRepository;
+            _userRepository = userRepository;
             _gameRepository = gameRepository;
         }
-        public async Task<GameResponseModel> AddGame(GameRequestModel request,int creatorId)
+        public async Task<GameResponseModel> AddGame(GameRequestModel request, int creatorId)
         {
+
+            var creator = await _userRepository.GetUser(creatorId);
+
+            if (creator == null) return new GameResponseModel
+            {
+                Status = false,
+                Message = "User not found",
+            };
+
             var game = new Game
             {
                 Title = request.Title,
                 CreatedTime = DateTime.Now,
                 CreatorId = creatorId,
-                GameCode = Guid.NewGuid().ToString().Substring(0,4),
+                GameCode = Guid.NewGuid().ToString().Substring(0, 4),
                 IsPlayed = false,
-                IsStarted = false,
+                IsStarted = false
             };
+
+
+            game.Players.Add(new Player
+            {
+                Username = creator.UserName,
+                IsCurrent = true,
+                IsActive = true,
+                GameId = game.Id,
+            });
+
             var add = await _gameRepository.AddGame(game);
+
+            var gameInitals = request.Alphabets.Select(c => new GameInitial
+            {
+                Alphabet = c.ToString(),
+                GameId = game.Id
+            }).ToList();
+
+            await _gameInitialRepository.AddInitials(gameInitals);
+
+
             if (add != null)
             {
                 return new GameResponseModel()
@@ -73,7 +106,7 @@ namespace api.Implementation.Services
             var getGame = await _gameRepository.GetGame(id);
             if (getGame != null)
             {
-                var deleteGame=_gameRepository.DeleteGame(getGame);
+                var deleteGame = _gameRepository.DeleteGame(getGame);
                 if (deleteGame)
                 {
                     return new GameResponseModel()
@@ -86,14 +119,15 @@ namespace api.Implementation.Services
 
             return new GameResponseModel()
             {
-                Status = false,Message = "Failed"
+                Status = false,
+                Message = "Failed"
             };
         }
 
         public async Task<GamesResponseModel> GetAllGames()
         {
-            
-            var getGames =  (await _gameRepository.GetAll()).Select(game=>new GameDto()
+
+            var getGames = (await _gameRepository.GetAll()).Select(game => new GameDto()
             {
                 Id = game.Id,
                 Title = game.Title,
@@ -105,7 +139,7 @@ namespace api.Implementation.Services
             }).ToList();
             return new GamesResponseModel
             {
-                Data = getGames, 
+                Data = getGames,
             };
         }
 
@@ -116,7 +150,8 @@ namespace api.Implementation.Services
             {
                 return new GameResponseModel
                 {
-                    Status = true, Message = "Successful",
+                    Status = true,
+                    Message = "Successful",
                     Data = new GameDto
                     {
                         Id = getGame.Id,
@@ -137,14 +172,15 @@ namespace api.Implementation.Services
             };
         }
 
-        public async Task<GameResponseModel>  GetGameByTitle(string title)
+        public async Task<GameResponseModel> GetGameByTitle(string title)
         {
             var getGame = await _gameRepository.GetGameByTitle(title);
             if (getGame != null)
             {
                 return new GameResponseModel
                 {
-                    Status = true, Message = "Successful",
+                    Status = true,
+                    Message = "Successful",
                     Data = new GameDto
                     {
                         Id = getGame.Id,
@@ -167,7 +203,7 @@ namespace api.Implementation.Services
 
         public async Task<PlayersResponseModel> GetPlayersByGame(int id)
         {
-            var players = (await _gameRepository.GetPlayersByGame(id)).Select(s=> new PlayerDto()
+            var players = (await _gameRepository.GetPlayersByGame(id)).Select(s => new PlayerDto()
             {
                 Id = s.Id,
                 UserName = s.Username,

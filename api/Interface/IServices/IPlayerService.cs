@@ -9,7 +9,7 @@ namespace api.Interface.IServices
 {
     public interface IPlayerService
     {
-        public Task<BaseResponse> AddPlayer(CreatePlayerRequest player);
+        public Task<BaseResponse> AddPlayer(CreatePlayerRequest player, bool isLoggedIn);
         public Task<BaseResponse> UpdatePlayerProfile(UpdatePlayerRequest player);
         public Task<BaseResponse> SetScore(int playerId);
          public Task<BaseResponse> SetCurrentPlayerStatus(int playerId);

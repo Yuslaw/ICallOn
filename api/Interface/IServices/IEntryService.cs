@@ -15,6 +15,6 @@ namespace api.Interface.IServices
         public Task<EntryResponseModel> GetEntry(int id);
         public Task<EntriesResponseModel> GetEntriesByGameCode(string GameCode);
 
-        public Task<EntriesResponseModel> GetEntriesByInitialAlphabetAsync(string Alphabet);   
+        public Task<EntriesResponseModel> GetEntriesByInitialAlphabetAsync(char Alphabet);   
     }
 }

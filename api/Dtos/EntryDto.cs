@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using api.Entities.Enums;
 
 namespace api.Dtos
 {
@@ -12,7 +13,7 @@ namespace api.Dtos
         public int PlayerId { get; set; }
         public string UserName { get; set; }
         public int InitialId { get; set; }
-        public string Alphabet { get; set; }
+        public char Alphabet { get; set; }
         public string Value { get; set; }
         public double Score { get; set; }
     }
@@ -21,8 +22,10 @@ namespace api.Dtos
     {
         public int GameId { get; set; }
         public int PlayerId { get; set; }
-        public int InitialId { get; set; }
+        public char Alphabet { get; set; }
         public string Value { get; set; }
+
+        public Category Category{get;set;}
     }
 
 

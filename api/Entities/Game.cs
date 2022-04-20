@@ -14,6 +14,6 @@ namespace api.Entities
         public  bool IsStarted { get; set; }
         public IList<Player> Players { get; set; } = new List<Player>();
         public IList<Entry> Entries { get; set; } = new List<Entry>();
-        public ICollection<GameInitial> GameInitials { get; set; } = new HashSet<GameInitial>();
+        public List<GameInitial> GameInitials { get; set; } = new List<GameInitial>();
     }
 }

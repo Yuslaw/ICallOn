@@ -41,7 +41,6 @@ namespace api.Implementation.Repositories
         public async Task<IList<Entry>> GetEntriesByExpression(Expression<Func<Entry, bool>> expression)
         {
             return await _context.Entries.Where(expression).Include(E => E.Game)
-                .Include(E => E.Initial)
                 .Include(E => E.Player).ToListAsync();
         }
 
@@ -49,14 +48,12 @@ namespace api.Implementation.Repositories
         {
             return await _context.Entries.
                 Include(E => E.Game)
-                .Include(E => E.Initial)
                 .Include(E => E.Player).ToListAsync();
         }
 
         public async Task<Entry> GetEntry(Expression<Func<Entry, bool>> expression)
         {
             return await _context.Entries.Include(E => E.Game)
-                .Include(E => E.Initial)
                 .Include(E => E.Player)
                 .Where(expression).SingleOrDefaultAsync();
         }
