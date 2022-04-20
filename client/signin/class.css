@@ -29,7 +29,7 @@ m    float: left;
     padding-top: 100px;  
 }
 #bg{
-    background-image: url('/classwork/btr.jpg');
+    background-image: url('./btr.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     color: aliceblue;

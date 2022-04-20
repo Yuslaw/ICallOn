@@ -7,7 +7,7 @@
 
     height: 100vh;
     display: flex;
-    background-image: url(/ICallOn//client/CreateGamePage/image33.jpg);
+    background-image: url('./image33.jpg');
     background-size:100%;
     background-blend-mode:darken;
     width: 100%;
