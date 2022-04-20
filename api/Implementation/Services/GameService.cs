@@ -137,9 +137,9 @@ namespace api.Implementation.Services
             };
         }
 
-        public async Task<GameResponseModel>  GetGameByTitle(GameRequestModel request)
+        public async Task<GameResponseModel>  GetGameByTitle(string title)
         {
-            var getGame = await _gameRepository.GetGameByTitle(request.Title);
+            var getGame = await _gameRepository.GetGameByTitle(title);
             if (getGame != null)
             {
                 return new GameResponseModel
@@ -164,6 +164,21 @@ namespace api.Implementation.Services
                 Message = "Failed"
             };
         }
-        
+
+        public async Task<PlayersResponseModel> GetPlayersByGame(int id)
+        {
+            var players = (await _gameRepository.GetPlayersByGame(id)).Select(s=> new PlayerDto()
+            {
+                Id = s.Id,
+                UserName = s.Username,
+                Score = s.Score,
+                GameId = s.Game.Id,
+            }).ToList();
+            return new PlayersResponseModel()
+            {
+                Data = players,
+                Status = true,
+            };
+        }
     }
 }

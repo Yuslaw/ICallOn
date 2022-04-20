@@ -7,15 +7,15 @@ using api.Entities;
 
 namespace api.Interface.IServices
 {
-    public class IPlayerService
+    public interface IPlayerService
     {
-        Task<BaseResponse> AddPlayer(CreatePlayerRequest player);
-        Task<BaseResponse> UpdatePlayerProfile(UpdatePlayerRequest player);
-        Task<BaseResponse> SetScore(int playerId);
-         Task<BaseResponse> SetCurrentPlayerStatus(int playerId);
-        Task<BaseResponse> MakePlayerActive(int playerId);
-        Task<PlayerResponseModel> GetPlayerByUserName(string userName);
-        Task<PlayersResponseModel> GetAllPlayers();
-        Task<BaseResponse> DeletePlayer(int id);
+        public Task<BaseResponse> AddPlayer(CreatePlayerRequest player);
+        public Task<BaseResponse> UpdatePlayerProfile(UpdatePlayerRequest player);
+        public Task<BaseResponse> SetScore(int playerId);
+         public Task<BaseResponse> SetCurrentPlayerStatus(int playerId);
+        public Task<BaseResponse> MakePlayerActive(int playerId);
+        public Task<PlayerResponseModel> GetPlayerByUserName(string userName);
+        public Task<PlayersResponseModel> GetAllPlayers();
+        public Task<BaseResponse> DeletePlayer(int id);
     }
 }

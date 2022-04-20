@@ -10,6 +10,7 @@ namespace api.Interface.IServices
         Task<GameResponseModel> DeleteGame(int id);
         Task<GamesResponseModel> GetAllGames();
         Task<GameResponseModel> GetGame(int id);
-        Task<GameResponseModel> GetGameByTitle(GameRequestModel request);
+        Task<GameResponseModel> GetGameByTitle(string title);
+        Task<PlayersResponseModel> GetPlayersByGame(int id);
     }
 }
