@@ -11,5 +11,6 @@ namespace api.Interface.IRepositories
         Task<User> GetUser(string username);
         Task<IList<User>> GetAllUsers();
         User Update(User user);
+        bool Delete (User user);
     }
 }

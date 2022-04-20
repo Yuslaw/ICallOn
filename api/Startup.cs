@@ -2,10 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Implementation.Repositories;
+using api.Implementation.Services;
+using api.Interface.IRepositories;
+using api.Interface.IServices;
+using Api.Application;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,6 +34,11 @@ namespace api
         {
 
             services.AddControllers();
+
+            services.AddDbContext<ApplicationContext>(option => option.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<IGameService, GameService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
