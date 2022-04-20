@@ -1,19 +1,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using api.Implementation.Repositories;
 using api.Implementation.Services;
 using api.Interface.IRepositories;
 using api.Interface.IServices;
+using Api.Application;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace api
@@ -31,9 +36,33 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
 
+            const string key = "ifhiewi949433849jfdjoi0oel03-039--";
+
             services.AddControllers();
+
+            services.AddDbContext<ApplicationContext>(option => option.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddSingleton<IJwtAuthentication>(new JwtAuthentication(key));
+
+            services.AddAuthentication(services=> {
+                services.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                services.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options => {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
             services.AddScoped<IGameRepository, GameRepository>();
             services.AddScoped<IGameService, GameService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserServices, UserServices>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
@@ -53,6 +82,8 @@ namespace api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

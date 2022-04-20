@@ -170,10 +170,9 @@ namespace api.Implementation.Services
             var players = (await _gameRepository.GetPlayersByGame(id)).Select(s=> new PlayerDto()
             {
                 Id = s.Id,
-                GameName = s.Game.Title,
                 UserName = s.Username,
-                GameCode = s.Game.GameCode,
                 Score = s.Score,
+                GameId = s.Game.Id,
             }).ToList();
             return new PlayersResponseModel()
             {

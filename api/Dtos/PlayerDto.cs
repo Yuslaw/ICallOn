@@ -8,8 +8,10 @@ namespace api.Dtos
         public int Id { get; set; }
         public string  UserName { get; set; }
         public int  Score { get; set; }
-        public string  GameName { get; set; }
-        public  string GameCode { get; set; }
+
+        public int  GameId { get; set; }
+        
+
         
     }
 
