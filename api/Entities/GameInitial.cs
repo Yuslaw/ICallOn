@@ -2,6 +2,7 @@ namespace api.Entities
 {
     public class GameInitial
     {
+      public int Id { get; set; }
       public  int GameId { get; set; }
       public Initial Initial { get; set; }
       public int InitialId { get; set; }
