@@ -1,5 +1,7 @@
 using System;
-using api.Interface.IServices.PlayerService;
+using System.Threading.Tasks;
+using api.Dtos;
+using api.Interface.IServices;
 using Microsoft.AspNetCore.Mvc;
 namespace api.Controllers
 {
@@ -7,10 +9,11 @@ namespace api.Controllers
     [ApiController]
     public class PlayerController : ControllerBase
     {
-        private readonly IPlayerService await _playerService;
+        private readonly IPlayerService  _playerService;
+       
         public PlayerController(IPlayerService playerService)
         {
-            await _playerService = playerService;
+             _playerService = playerService;
         }
         [HttpPost]
         public async Task<IActionResult> AddPlayer(CreatePlayerRequest playerRequest)
@@ -25,7 +28,7 @@ namespace api.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdatePlayerProfile(UpdatePlayerRequest playerRequest)
         {
-            var player = await _playerService.UpdatePlayer(playerRequest);
+            var player = await _playerService.UpdatePlayerProfile(playerRequest);
             if (player.Status == true)
             {
                 return Ok(player);
@@ -45,7 +48,7 @@ namespace api.Controllers
         [HttpPut("player/{currentPlayerId}")]
         public async Task<IActionResult> SetCurrentPlayerStatus(int currentPlayerId)
         {
-            var player = await _playerService.SetCurrentPlayerStatus(playerId);
+            var player = await _playerService.SetCurrentPlayerStatus(currentPlayerId);
             if (player.Status == true)
             {
                 return Ok(player);
@@ -83,9 +86,9 @@ namespace api.Controllers
             return BadRequest();
         }
         [HttpDelete("{id}")]
-        public Task<IActionResult> DeletePlayer(int id)
+        public async Task<IActionResult> DeletePlayer(int id)
         {
-            var deletedPlayer = await _playerService.DeletePlayer(id);
+            var player = await _playerService.DeletePlayer(id);
             if (player.Status == true)
             {
                 return Ok(player);

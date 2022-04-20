@@ -14,7 +14,7 @@ namespace api.Implementation.Services
     {
         private readonly IPlayerRepository _playerRepository;
         private readonly IGameRepository _gameRepository;
-        public PlayerService(IPlayerRepository playerRepository, IGameRepository gameRepository;)
+        public PlayerService(IPlayerRepository playerRepository, IGameRepository gameRepository)
         {
             _playerRepository = playerRepository;
             _gameRepository = gameRepository;
@@ -27,12 +27,12 @@ namespace api.Implementation.Services
                     var newplayer = new Player
                     {
                         GameId = game.Id,
-                        UserName = player.UserName
+                        Username = player.UserName,
                         IsCurrent = false,
                         Score = 0,
                         IsActive = true
                     };
-                    _playerRepository.AddPlayer(newplayer);
+                    await _playerRepository.AddPlayer(newplayer);
                     return new BaseResponse
                     {
                         Status = true,
@@ -47,15 +47,15 @@ namespace api.Implementation.Services
         }
         public async Task<BaseResponse> MakePlayerActive(int playerId)
         {
-            var checkPlayer = await _playerRepository.Get(x => x.Id == playerId);
+            var checkPlayer = await _playerRepository.GetPlayer(x => x.Id == playerId);
              if (checkPlayer != null)
             {
                 checkPlayer.IsActive = false;
-                _playerRepository.UpdatePlayer(checkPlayer);
+                await _playerRepository.UpdatePlayer(checkPlayer);
                 return new BaseResponse
                 {
                     Status = true,
-                    Message = $"{Player.UserName} quit the game"
+                    Message = $"{checkPlayer.Username} quit the game"
                 };
             }
             return new BaseResponse
@@ -71,8 +71,8 @@ namespace api.Implementation.Services
             var checkPlayer = await _playerRepository.GetPlayer(x => x.Id == playerId);
             if (checkPlayer != null)
             {
-                checkPlayer.Score = player.Score;
-                _playerRepository.UpdatePlayer(checkPlayer);
+                checkPlayer.Score = checkPlayer.Score;
+                await _playerRepository.UpdatePlayer(checkPlayer);
                 return new BaseResponse
                 {
                     Status = true,
@@ -88,11 +88,11 @@ namespace api.Implementation.Services
         }
         public async Task<BaseResponse> UpdatePlayerProfile(UpdatePlayerRequest player)
         {
-            var checkPlayer = await _playerRepository.GetPlayer(x => x.UserName == player.UserName);
-            var game = await _gameRepository.GetGameByTitle(player.GameName); 
+            var checkPlayer = await _playerRepository.GetPlayer(x => x.Username == player.UserName);
+            var game = await _gameRepository.GetGame(player.GameId); 
             if (checkPlayer != null)
             {
-                checkPlayer.UserName = player.UserName;
+                checkPlayer.Username = player.UserName;
                 checkPlayer.GameId = game.Id;
                 return new BaseResponse
                 {
@@ -108,13 +108,13 @@ namespace api.Implementation.Services
         }
         public async Task<BaseResponse> SetCurrentPlayerStatus(int playerId)
         {
-            var checkPlayer = await _playerRepository.Get(x => x.Id == playerId);
+            var checkPlayer = await _playerRepository.GetPlayer(x => x.Id == playerId);
             if (checkPlayer != null)
             {
                 if (checkPlayer.IsCurrent)
                 {
                     checkPlayer.IsCurrent = false;
-                    _playerRepository.UpdatePlayer(checkPlayer);
+                    await _playerRepository.UpdatePlayer(checkPlayer);
                     return new BaseResponse
                     {
                         Status = true,
@@ -122,7 +122,7 @@ namespace api.Implementation.Services
                     };
                 }
                 checkPlayer.IsCurrent = true;
-                _playerRepository.UpdatePlayer(checkPlayer);
+                await _playerRepository.UpdatePlayer(checkPlayer);
                 return new BaseResponse
                 {
                     Status = true,
@@ -138,14 +138,14 @@ namespace api.Implementation.Services
         }
         public async Task<PlayerResponseModel> GetPlayerByUserName(string userName)
         {
-             var checkPlayer = await _playerRepository.GetPlayer(x => x.userName == player.UserName);
+             var checkPlayer = await _playerRepository.GetPlayer(x => x.Username == userName);
             if (checkPlayer != null)
             {
                 return new PlayerResponseModel
                 {
                     Data = new PlayerDto
                     {
-                        UserName = checkPlayer.UserName,
+                        UserName = checkPlayer.Username,
                         Score = checkPlayer.Score,
                         GameId = checkPlayer.GameId,
                     },
@@ -159,12 +159,12 @@ namespace api.Implementation.Services
                 Message = "Player Available"
             };
         }
-        public Task<PlayersResponseModel> GetAllPlayers()
+        public async Task<PlayersResponseModel> GetAllPlayers()
         {
             var players = await _playerRepository.GetAllPlayers();
-            var playerDto = players.Select(p => {
+            var playerDto = players.Select(p => new PlayerDto {
 
-               UserName = p.UserName,
+               UserName = p.Username,
                GameId = p.GameId,
                Score = p.Score
             }).ToList();
@@ -172,16 +172,16 @@ namespace api.Implementation.Services
             {
                 Data = playerDto,
                 Message = "These are list of Players",
-                Status - true
+                Status = true
             };
 
         }
-        public Task<BaseResponse> DeletePlayer(int id)
+        public async Task<BaseResponse> DeletePlayer(int id)
         {
-            var player = _playerRepository.GetPlayer(p => p.Id == id);
+            var player = await _playerRepository.GetPlayer(p => p.Id == id);
             if (player != null)
             {
-                _playerRepository.DeletePlayer(player);
+                await _playerRepository.DeletePlayer(player.Id);
                 return new BaseResponse
                 {
                     Message = "Player successfully removed",

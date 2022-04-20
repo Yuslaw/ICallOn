@@ -11,35 +11,37 @@ namespace api.Implementation.Repositories
 {
     public class PlayerRepository
     {
-        private readonly Context _context;
-        public PlayerRepository(Context context)
+        private readonly ApplicationContext _context;
+        public PlayerRepository(ApplicationContext context)
         {
             _context = context;
         }
         public async Task<Player> AddPlayer(Player player)
         {
             await _context.Players.AddAsync(player);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return player;
         }
-        public Task<Player> UpdatePlayer(Player player)
+        public async Task<Player> UpdatePlayer(Player player)
         {
-            var updatedPlayer = _context.Player.UpdateAsync(player);
-            return updatedPlayer;
+            _context.Players.Update(player);
+            await _context.SaveChangesAsync();
+            return player;
         }
-        public async Task<Player> GetPlayer (Expression<Func<Player,bool>> expression)
+        public async Task<Player> GetPlayer(Expression<Func<Player, bool>> expression)
         {
             var player = await _context.Players.SingleOrDefaultAsync(expression);
             return player;
         }
         public async Task<IList<Player>> GetAllPlayers()
         {
-            var players = _context.Player.ToList();
+            var players = await _context.Players.ToListAsync();
             return players;
         }
         public async Task<bool> DeletePlayer(Player player)
         {
-            _context.Players.RemoveAsync(player);
+            _context.Players.Remove(player);
+            await _context.SaveChangesAsync();
             return true;
         }
     }
