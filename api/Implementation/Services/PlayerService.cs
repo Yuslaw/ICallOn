@@ -14,41 +14,64 @@ namespace api.Implementation.Services
     {
         private readonly IPlayerRepository _playerRepository;
         private readonly IGameRepository _gameRepository;
-        public PlayerService(IPlayerRepository playerRepository, IGameRepository gameRepository)
+        private readonly IUserRepository _userRepository;
+        public PlayerService(IPlayerRepository playerRepository, IGameRepository gameRepository, IUserRepository userRepository)
         {
+            _userRepository = userRepository;
             _playerRepository = playerRepository;
             _gameRepository = gameRepository;
         }
-        public async Task<BaseResponse> AddPlayer(CreatePlayerRequest player)
+        public async Task<BaseResponse> AddPlayer(CreatePlayerRequest player, bool isLoggedIn)
         {
-              var game = await _gameRepository.GetGameByTitle(player.GameName); 
-                if(game != null)
-                {
-                    var newplayer = new Player
-                    {
-                        GameId = game.Id,
-                        Username = player.UserName,
-                        IsCurrent = false,
-                        Score = 0,
-                        IsActive = true
-                    };
-                    await _playerRepository.AddPlayer(newplayer);
-                    return new BaseResponse
-                    {
-                        Status = true,
-                       Message = "Player successfully added"
-                    };
-                }
-                 return new BaseResponse
+            var game = await _gameRepository.GetGame(player.GameId);
+            if (game == null)
+            {
+                return new BaseResponse
                 {
                     Status = false,
-                    Message = "An error occured unable to add player"
-                };   
+                    Message = "Game not found"
+                };
+            }
+
+            if (!isLoggedIn) player.UserName = player.UserName + "-" + Guid.NewGuid().ToString().Substring(0, 4);
+
+
+            if (game.Players.Any(x => x.Username == player.UserName))
+            {
+                return new BaseResponse
+                {
+                    Status = false,
+                    Message = "Player already exists"
+                };
+            }
+
+
+            if (game != null)
+            {
+                var newplayer = new Player
+                {
+                    GameId = game.Id,
+                    Username = player.UserName,
+                    IsCurrent = false,
+                    IsActive = true
+                };
+                await _playerRepository.AddPlayer(newplayer);
+                return new BaseResponse
+                {
+                    Status = true,
+                    Message = "Player successfully added"
+                };
+            }
+            return new BaseResponse
+            {
+                Status = false,
+                Message = "An error occured unable to add player"
+            };
         }
         public async Task<BaseResponse> MakePlayerActive(int playerId)
         {
             var checkPlayer = await _playerRepository.GetPlayer(x => x.Id == playerId);
-             if (checkPlayer != null)
+            if (checkPlayer != null)
             {
                 checkPlayer.IsActive = false;
                 await _playerRepository.UpdatePlayer(checkPlayer);
@@ -63,8 +86,8 @@ namespace api.Implementation.Services
                 Status = false,
                 Message = "Player not found"
             };
-            
-        
+
+
         }
         public async Task<BaseResponse> SetScore(int playerId)
         {
@@ -84,12 +107,12 @@ namespace api.Implementation.Services
                 Status = false,
                 Message = "Player not found"
             };
-            
+
         }
         public async Task<BaseResponse> UpdatePlayerProfile(UpdatePlayerRequest player)
         {
             var checkPlayer = await _playerRepository.GetPlayer(x => x.Username == player.UserName);
-            var game = await _gameRepository.GetGame(player.GameId); 
+            var game = await _gameRepository.GetGame(player.GameId);
             if (checkPlayer != null)
             {
                 checkPlayer.Username = player.UserName;
@@ -134,11 +157,11 @@ namespace api.Implementation.Services
                 Status = false,
                 Message = "Player not found"
             };
-            
+
         }
         public async Task<PlayerResponseModel> GetPlayerByUserName(string userName)
         {
-             var checkPlayer = await _playerRepository.GetPlayer(x => x.Username == userName);
+            var checkPlayer = await _playerRepository.GetPlayer(x => x.Username == userName);
             if (checkPlayer != null)
             {
                 return new PlayerResponseModel
@@ -162,11 +185,12 @@ namespace api.Implementation.Services
         public async Task<PlayersResponseModel> GetAllPlayers()
         {
             var players = await _playerRepository.GetAllPlayers();
-            var playerDto = players.Select(p => new PlayerDto {
+            var playerDto = players.Select(p => new PlayerDto
+            {
 
-               UserName = p.Username,
-               GameId = p.GameId,
-               Score = p.Score
+                UserName = p.Username,
+                GameId = p.GameId,
+                Score = p.Score
             }).ToList();
             return new PlayersResponseModel
             {

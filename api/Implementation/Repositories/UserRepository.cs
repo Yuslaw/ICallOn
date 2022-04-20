@@ -52,5 +52,10 @@ namespace api.Implementation.Repositories
             _Context.SaveChanges();
             return true;
         }
+
+        public async Task<User> GetUser(int id)
+        {
+            return await _Context.Users.FindAsync(id);
+        }
     }
 }

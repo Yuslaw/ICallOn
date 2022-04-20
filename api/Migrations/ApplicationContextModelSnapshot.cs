@@ -23,10 +23,10 @@ namespace api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("GameId")
+                    b.Property<char>("Alphabet")
                         .HasColumnType("int");
 
-                    b.Property<int>("InitialId")
+                    b.Property<int>("GameId")
                         .HasColumnType("int");
 
                     b.Property<int>("PlayerId")
@@ -41,8 +41,6 @@ namespace api.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GameId");
-
-                    b.HasIndex("InitialId");
 
                     b.HasIndex("PlayerId");
 
@@ -84,16 +82,13 @@ namespace api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<char>("Alphabet")
+                        .HasColumnType("int");
+
                     b.Property<int>("GameId")
                         .HasColumnType("int");
 
-                    b.Property<int>("InitialId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsIPlayed")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("IsIncluded")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<int?>("PlayerId")
@@ -103,25 +98,9 @@ namespace api.Migrations
 
                     b.HasIndex("GameId");
 
-                    b.HasIndex("InitialId");
-
                     b.HasIndex("PlayerId");
 
                     b.ToTable("GameInitials");
-                });
-
-            modelBuilder.Entity("api.Entities.Initial", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Alphabets")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Initials");
                 });
 
             modelBuilder.Entity("api.Entities.Player", b =>
@@ -189,12 +168,6 @@ namespace api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("api.Entities.Initial", "Initial")
-                        .WithMany()
-                        .HasForeignKey("InitialId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("api.Entities.Player", "Player")
                         .WithMany()
                         .HasForeignKey("PlayerId")
@@ -202,8 +175,6 @@ namespace api.Migrations
                         .IsRequired();
 
                     b.Navigation("Game");
-
-                    b.Navigation("Initial");
 
                     b.Navigation("Player");
                 });
@@ -216,19 +187,11 @@ namespace api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("api.Entities.Initial", "Initial")
-                        .WithMany("GameInitial")
-                        .HasForeignKey("InitialId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("api.Entities.Player", "Player")
                         .WithMany("GameInitial")
                         .HasForeignKey("PlayerId");
 
                     b.Navigation("Game");
-
-                    b.Navigation("Initial");
 
                     b.Navigation("Player");
                 });
@@ -251,11 +214,6 @@ namespace api.Migrations
                     b.Navigation("GameInitials");
 
                     b.Navigation("Players");
-                });
-
-            modelBuilder.Entity("api.Entities.Initial", b =>
-                {
-                    b.Navigation("GameInitial");
                 });
 
             modelBuilder.Entity("api.Entities.Player", b =>

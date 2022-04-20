@@ -8,6 +8,7 @@ namespace api.Interface.IRepositories
     {
         Task<User> ResgisterUser(User user);
         Task<bool> CheckUserName(string username);
+        Task<User> GetUser(int id);
         Task<User> GetUser(string username);
         Task<IList<User>> GetAllUsers();
         User Update(User user);

@@ -9,7 +9,7 @@ using api.Interface.IRepositories;
 using Microsoft.EntityFrameworkCore;
 namespace api.Implementation.Repositories
 {
-    public class PlayerRepository
+    public class PlayerRepository : IPlayerRepository
     {
         private readonly ApplicationContext _context;
         public PlayerRepository(ApplicationContext context)
@@ -43,6 +43,11 @@ namespace api.Implementation.Repositories
             _context.Players.Remove(player);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public Task<bool> DeletePlayer(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

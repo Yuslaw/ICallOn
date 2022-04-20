@@ -18,7 +18,7 @@ namespace api.Controllers
             _authentication = authentication;
         }
         [HttpPost("CreateUser")]
-        public async Task<IActionResult> CreatUser(UserRequestModel _request)
+        public async Task<IActionResult> CreatUser([FromBody]UserRequestModel _request)
         {
             var create = await _userService.ResgisterUser(_request);
             if (create.Status)
@@ -28,7 +28,7 @@ namespace api.Controllers
             return BadRequest(create);
         }
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(UserLoginRequest _loginRequest)
+        public async Task<IActionResult> Login([FromBody]UserLoginRequest _loginRequest)
         {
             var login = await _userService.Login(_loginRequest);
             if (login.Status!=true)

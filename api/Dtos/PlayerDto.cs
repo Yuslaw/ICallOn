@@ -17,11 +17,8 @@ namespace api.Dtos
 
     public class CreatePlayerRequest
     {
-        public int Id { get; set; }
         public string  UserName { get; set; }
-        public string  Score { get; set; }
         public int  GameId { get; set; }
-        public string  GameName { get; set; }
     }
     
     public class UpdatePlayerRequest

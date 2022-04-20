@@ -27,19 +27,6 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Initials",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Alphabets = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Initials", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -88,7 +75,7 @@ namespace api.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     GameId = table.Column<int>(type: "int", nullable: false),
                     PlayerId = table.Column<int>(type: "int", nullable: false),
-                    InitialId = table.Column<int>(type: "int", nullable: false),
+                    Alphabet = table.Column<int>(type: "int", nullable: false),
                     Value = table.Column<string>(type: "text", nullable: true),
                     Score = table.Column<double>(type: "double", nullable: false)
                 },
@@ -99,12 +86,6 @@ namespace api.Migrations
                         name: "FK_Entries_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Entries_Initials_InitialId",
-                        column: x => x.InitialId,
-                        principalTable: "Initials",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -122,8 +103,7 @@ namespace api.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     GameId = table.Column<int>(type: "int", nullable: false),
-                    InitialId = table.Column<int>(type: "int", nullable: false),
-                    IsIncluded = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Alphabet = table.Column<int>(type: "int", nullable: false),
                     IsIPlayed = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     PlayerId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -134,12 +114,6 @@ namespace api.Migrations
                         name: "FK_GameInitials_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_GameInitials_Initials_InitialId",
-                        column: x => x.InitialId,
-                        principalTable: "Initials",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -156,11 +130,6 @@ namespace api.Migrations
                 column: "GameId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Entries_InitialId",
-                table: "Entries",
-                column: "InitialId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Entries_PlayerId",
                 table: "Entries",
                 column: "PlayerId");
@@ -169,11 +138,6 @@ namespace api.Migrations
                 name: "IX_GameInitials_GameId",
                 table: "GameInitials",
                 column: "GameId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GameInitials_InitialId",
-                table: "GameInitials",
-                column: "InitialId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GameInitials_PlayerId",
@@ -196,9 +160,6 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Initials");
 
             migrationBuilder.DropTable(
                 name: "Players");

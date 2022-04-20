@@ -68,13 +68,12 @@ namespace api.Implementation.Services
            {
                Data = entries.Select(v=>new EntryDto
                {
-                   Alphabet = v.Initial.Alphabets,
+                   Alphabet = v.Alphabet,
                    Score = v.Score,
                    GameId = v.GameId,
                    GameTitle = v.Game.Title,
                    PlayerId = v.PlayerId,
                    Value = v.Value,
-                   InitialId = v.InitialId,
                    UserName = v.Player.Username,
                    Id = v.Id
                    
@@ -91,10 +90,9 @@ namespace api.Implementation.Services
             var entryDto = new EntryDto
             {
                 Id = id,
-                Alphabet = entry.Initial.Alphabets,
+                Alphabet = entry.Alphabet,
                 GameId = entry.GameId,
                 GameTitle = entry.Game.Title,
-                InitialId = entry.InitialId,
                 PlayerId = entry.PlayerId,
                 Score = entry.Score,
                 UserName = entry.Player.Username,
@@ -115,11 +113,10 @@ namespace api.Implementation.Services
             {
                 Data = entries.Select(e => new EntryDto
                 {
-                    Alphabet = e.Initial.Alphabets,
+                    Alphabet = e.Alphabet,
                     GameId = e.Game.Id,
                     GameTitle = e.Game.Title,
                     Id = e.Id,
-                    InitialId = e.InitialId,
                     PlayerId = e.PlayerId,
                     Score = e.Score,
                     UserName = e.Player.Username,
@@ -131,19 +128,18 @@ namespace api.Implementation.Services
             };
         }
 
-        public async Task<EntriesResponseModel> GetEntriesByInitialAlphabetAsync(string Alphabet)
+        public async Task<EntriesResponseModel> GetEntriesByInitialAlphabetAsync(char Alphabet)
 
         {
-            var entries = await _entryRepository.GetEntriesByExpression(E => E.Initial.Alphabets == Alphabet);
+            var entries = await _entryRepository.GetEntriesByExpression(E => E.Alphabet == Alphabet);
             return new EntriesResponseModel
             {
                 Data = entries.Select(e => new EntryDto
                 {
-                    Alphabet = e.Initial.Alphabets,
+                    Alphabet = e.Alphabet,
                     GameId = e.Game.Id,
                     GameTitle = e.Game.Title,
                     Id = e.Id,
-                    InitialId = e.InitialId,
                     PlayerId = e.PlayerId,
                     Score = e.Score,
                     UserName = e.Player.Username,

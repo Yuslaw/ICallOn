@@ -95,7 +95,7 @@ namespace api.Controllers
 
 
         [HttpGet("GetEntryByInitialAlphabet")]
-        public async Task<IActionResult> GetEntryByIntialAlphabet(string alphabet)
+        public async Task<IActionResult> GetEntryByIntialAlphabet(char alphabet)
         {
             var entry = await _entryService.GetEntriesByInitialAlphabetAsync(alphabet);
             if (entry.Status)

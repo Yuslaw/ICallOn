@@ -1,7 +1,9 @@
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using api.Dtos;
 using api.Interface.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -14,17 +16,19 @@ namespace api.Controllers
         {
             _gameService = gameService;
         }
-        [HttpPost ("game/newgame")]
-        public async Task<IActionResult> AddGame(GameRequestModel requestModel)
+
+        [Authorize]
+        [HttpPost("game/newgame")]
+        public async Task<IActionResult> AddGame([FromBody]GameRequestModel requestModel)
         {
-           var gameCode = Convert.ToInt32(User.FindFirst("NameIdentify"));
+            var gameCode = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var newGame = await _gameService.AddGame(requestModel, gameCode);
             if (newGame.Status)
             {
                 return Ok(newGame.Message);
             }
 
-            return NotFound(newGame.Message);
+            return BadRequest(newGame.Message);
         }
 
         [HttpGet("GetGameById")]
@@ -38,9 +42,9 @@ namespace api.Controllers
 
             return NotFound(game.Message);
         }
-        
+
         [HttpGet("GetGameTitle")]
-        public async Task<IActionResult>  GetGameByTitle(string title)
+        public async Task<IActionResult> GetGameByTitle(string title)
         {
             //string title = request.Title;
             var game = await _gameService.GetGameByTitle(title);
@@ -51,7 +55,7 @@ namespace api.Controllers
 
             return BadRequest(game.Message);
         }
-        
+
         [HttpGet("GetAllGames")]
         public async Task<IActionResult> GetAllGames()
         {
@@ -63,7 +67,7 @@ namespace api.Controllers
 
             return BadRequest();
         }
-        
+
         [HttpPost("UpdateGame")]
         public async Task<IActionResult> UpdateGame(GameRequestModel request, int id)
         {
