@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Application;
+using api.Dtos;
 using api.Entities;
 using api.Interface.IRepositories;
 using Microsoft.EntityFrameworkCore;
@@ -53,10 +54,14 @@ namespace api.Implementation.Repositories
 
         public async Task<Game> GetGameByTitle(string title)
         {
-            var game = await _context.Games.FirstOrDefaultAsync(x=>x.Title==title);
+            var game = await _context.Games.SingleOrDefaultAsync(x=>x.Title==title);
             return game;
         }
 
-        
+        public async Task<IList<Player>> GetPlayersByGame(int id)
+        {
+            var play=await _context.Players.Include(s => s.Game).Where(x => x.Game.Id == id).ToListAsync();
+            return play;
+        }
     }
 }
